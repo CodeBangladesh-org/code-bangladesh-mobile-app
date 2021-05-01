@@ -1,7 +1,7 @@
 import 'package:code_bangladesh_mobile_app/common_ui/appbar_builder.dart';
 import 'package:code_bangladesh_mobile_app/course_screen/course_screen.dart';
 import 'package:code_bangladesh_mobile_app/dto/app_data.dart';
-import 'package:code_bangladesh_mobile_app/nav_drawer/nav_drawer.dart';
+import 'package:code_bangladesh_mobile_app/common_ui/nav_drawer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -115,36 +115,87 @@ class CategoryScreenState extends State<CategoryScreen> {
   }
 
   Column _buildCoursesInfo(BuildContext context, List<CourseResponseDTO> courses) {
-    return Column(children: <Card>[
+    return Column(children: <Widget>[
       for (int i = 0; i < courses.length; i++) _buildCourseInfo(context, courses[i]),
     ]);
   }
 
   Widget _buildCourseInfo(BuildContext context, CourseResponseDTO course) {
-    return new Card(
-        elevation: 0.0,
-        color: Colors.white,
-        child: new InkWell(
-            splashColor: Colors.blue.shade200,
-            onTap: () {
-              print("tapped");
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CourseScreen(courseId: course.id, course: course),
-                ),
-              );
-            },
-            child: Card(
-                color: Colors.blue.shade50,
-                child: ListTile(
-                    title: Text(
-                      course.name,
-                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      course.description,
-                      style: TextStyle(),
-                    )))));
+    return new InkWell(
+      splashColor: Colors.blue.shade200,
+      onTap: () {
+        print("tapped");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CourseScreen(courseId: course.id, course: course),
+          ),
+        );
+      },
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(children: <Widget>[
+              Flexible(
+                  child: Text(
+                course.name,
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.blue.shade500),
+              ))
+            ]),
+            Padding(padding: EdgeInsets.only(top: 5.0)),
+            Row(children: <Widget>[
+              Flexible(
+                  child: Text(
+                course.description,
+                style: TextStyle(),
+              ))
+            ]),
+            Padding(padding: EdgeInsets.only(top: 5.0)),
+            Row(children: <Widget>[
+              Image.asset(
+                "assets/img/youtube.png",
+                fit: BoxFit.contain,
+                width: 20,
+                height: 20,
+              ),
+              SizedBox(width: 5.0),
+              Text(" " + course.numberOfVideos + "টি ভিডিও"),
+            ]),
+            Padding(padding: EdgeInsets.only(top: 5.0)),
+            Row(children: <Widget>[
+              Image.asset(
+                "assets/img/tag.png",
+                fit: BoxFit.contain,
+                width: 20,
+                height: 20,
+              ),
+              SizedBox(width: 5.0),
+              Flexible(child: Text(course.topicsCommaSeparated)),
+            ]),
+            Padding(padding: EdgeInsets.only(top: 5.0)),
+            Row(children: <Widget>[
+              Image.asset(
+                "assets/img/instructor.png",
+                fit: BoxFit.contain,
+                width: 20,
+                height: 20,
+              ),
+              SizedBox(width: 5.0),
+              Text(course.instructorsCommaSeparated),
+            ]),
+            Padding(padding: EdgeInsets.only(top: 5.0)),
+            Row(children: <Widget>[
+              Image.asset(
+                "assets/img/complexity.png",
+                fit: BoxFit.contain,
+                width: 20,
+                height: 20,
+              ),
+              SizedBox(width: 5.0),
+              Flexible(child: Text(course.complexity)),
+            ]),
+            SizedBox(height: 25.0),
+          ])),
+    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:code_bangladesh_mobile_app/common_ui/appbar_builder.dart';
 import 'package:code_bangladesh_mobile_app/dto/app_data.dart';
-import 'package:code_bangladesh_mobile_app/nav_drawer/nav_drawer.dart';
+import 'package:code_bangladesh_mobile_app/common_ui/nav_drawer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,53 +67,6 @@ class CourseScreenState extends State<CourseScreen> {
             )));
   }
 
-  Widget _buildStatInfo(CategoryStatResponseDTO stat) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
-      Expanded(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: 25,
-            minHeight: 25,
-            maxWidth: 25,
-            maxHeight: 25,
-          ),
-          child: Image.asset("assets/img/learning.png", fit: BoxFit.contain),
-        ),
-      ),
-      Expanded(
-        child: Text(stat.numberOfCourses + "টি কোর্স"),
-      ),
-      Expanded(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: 25,
-            minHeight: 25,
-            maxWidth: 25,
-            maxHeight: 25,
-          ),
-          child: Image.asset("assets/img/youtube.png", fit: BoxFit.contain),
-        ),
-      ),
-      Expanded(
-        child: Text(stat.numberOfVideos + "টি ভিডিও"),
-      ),
-      Expanded(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: 25,
-            minHeight: 25,
-            maxWidth: 25,
-            maxHeight: 25,
-          ),
-          child: Image.asset("assets/img/book.png", fit: BoxFit.contain),
-        ),
-      ),
-      Expanded(
-        child: Text(stat.numberOfTopics + "টি টপিকস"),
-      ),
-    ]);
-  }
-
   Column _buildCoursesInfo(BuildContext context, List<CourseContentResponseDTO> contents) {
     return Column(children: <Card>[
       for (int i = 0; i < contents.length; i++) _buildCourseInfo(context, contents[i]),
@@ -132,7 +85,7 @@ class CourseScreenState extends State<CourseScreen> {
                 child: ListTile(
                     title: Text(
                       content.name,
-                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.blue.shade500),
                     ),
                     subtitle: Text(
                       content.description,
