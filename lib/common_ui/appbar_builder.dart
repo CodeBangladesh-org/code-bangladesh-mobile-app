@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class HomeScreenAppBar {
+class AppBarBuilder {
   static AppBar buildAppBar() {
     return new AppBar(
-      title: new Text(""),
+      title: new Text("CodeBangladesh.org"),
       backgroundColor: Colors.blue.shade200,
       actions: <Widget>[
         Padding(

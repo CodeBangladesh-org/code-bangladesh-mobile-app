@@ -2,55 +2,102 @@ class AppDataResponseDTO {
   final String headerText;
   final String description;
   final List<CategoryResponseDTO> categories;
-  final List<CourseResponseDTO> courses;
 
-  AppDataResponseDTO({this.headerText, this.description, this.categories, this.courses});
+  AppDataResponseDTO({this.headerText, this.description, this.categories});
 
-  factory AppDataResponseDTO.fromJson(Map<String, dynamic> json) {
-    final categoryJsons = json['categories'].cast<Map<String, dynamic>>();
+  factory AppDataResponseDTO.fromJson(Map<String, dynamic> appDataJson) {
+    final categoryJsonArray = appDataJson['categories'].cast<Map<String, dynamic>>();
+
     List<CategoryResponseDTO> categories =
-        categoryJsons.map<CategoryResponseDTO>((categoryJson) => CategoryResponseDTO.fromJson(categoryJson)).toList();
-
-    final courseJsons = json['courses'].cast<Map<String, dynamic>>();
-    List<CourseResponseDTO> courses =
-        courseJsons.map<CourseResponseDTO>((courseJson) => CourseResponseDTO.fromJson(courseJson)).toList();
+    categoryJsonArray.map<CategoryResponseDTO>((categoryJsonObj) => CategoryResponseDTO.fromJson(categoryJsonObj))
+        .toList();
 
     return AppDataResponseDTO(
-        headerText: json['header_text'] as String,
-        description: json['description'] as String,
-        categories: categories,
-        courses: courses);
+        headerText: appDataJson['headerText'] as String,
+        description: appDataJson['description'] as String,
+        categories: categories);
   }
 }
 
 class CategoryResponseDTO {
+  final String id;
   final String name;
   final String description;
   final String imageSource;
+  final CategoryStatResponseDTO stat;
+  final List<CourseResponseDTO> courses;
 
-  CategoryResponseDTO({this.name, this.description, this.imageSource});
+  CategoryResponseDTO({this.id, this.name, this.description, this.imageSource, this.stat, this.courses});
 
-  factory CategoryResponseDTO.fromJson(Map<String, dynamic> json) {
+  factory CategoryResponseDTO.fromJson(Map<String, dynamic> categoryJson) {
+    List<CourseResponseDTO> categoryCourses = categoryJson['courses'].cast<Map<String, dynamic>>()
+        .map<CourseResponseDTO>((courseJsonObj) => CourseResponseDTO.fromJson(courseJsonObj))
+        .toList();
+
     return CategoryResponseDTO(
-      name: json['name'] as String,
-      description: json['description'] as String,
-      imageSource: json['image_source'] as String,
-    );
+        id: categoryJson['id'] as String,
+        name: categoryJson['name'] as String,
+        description: categoryJson['description'] as String,
+        imageSource: (categoryJson['image_source'] as String).substring(1),
+        stat: CategoryStatResponseDTO.fromJson(categoryJson),
+        courses: categoryCourses);
   }
 }
 
 class CourseResponseDTO {
+  final String id;
   final String name;
   final String description;
+  final String imageSource;
   final String categoryId;
+  final List<CourseContentResponseDTO> content;
 
-  CourseResponseDTO({this.name, this.description, this.categoryId});
+  CourseResponseDTO({this.id, this.name, this.description, this.imageSource, this.categoryId, this.content});
 
-  factory CourseResponseDTO.fromJson(Map<String, dynamic> json) {
+  factory CourseResponseDTO.fromJson(Map<String, dynamic> courseJsonObj) {
+    List<CourseContentResponseDTO> content = courseJsonObj['content'].cast<Map<String, dynamic>>()
+        .map<CourseContentResponseDTO>((contentJsonObj) => CourseContentResponseDTO.fromJson(contentJsonObj))
+        .toList();
+
     return CourseResponseDTO(
+      id: courseJsonObj['id'] as String,
+      name: courseJsonObj['name'] as String,
+      description: courseJsonObj['description'] as String,
+      imageSource: (courseJsonObj['image_source'] as String).substring(1),
+      categoryId: courseJsonObj['category_id'] as String,
+      content: content,
+    );
+  }
+}
+
+class CategoryStatResponseDTO {
+  final String numberOfCourses;
+  final String numberOfVideos;
+  final String numberOfTopics;
+
+  CategoryStatResponseDTO({this.numberOfCourses, this.numberOfVideos, this.numberOfTopics});
+
+  factory CategoryStatResponseDTO.fromJson(Map<String, dynamic> json) {
+    return CategoryStatResponseDTO(
+      numberOfCourses: json['number_of_courses'] as String,
+      numberOfVideos: json['number_of_videos'] as String,
+      numberOfTopics: json['number_of_topics'] as String,
+    );
+  }
+}
+
+class CourseContentResponseDTO {
+  final String name;
+  final String description;
+  final String videoLink;
+
+  CourseContentResponseDTO({this.name, this.description, this.videoLink,});
+
+  factory CourseContentResponseDTO.fromJson(Map<String, dynamic> json) {
+    return CourseContentResponseDTO(
       name: json['name'] as String,
       description: json['description'] as String,
-      categoryId: json['category_id'] as String,
+      videoLink: json['video_link'] as String,
     );
   }
 }
