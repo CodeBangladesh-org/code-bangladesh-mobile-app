@@ -1,10 +1,12 @@
 import 'package:code_bangladesh_mobile_app/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class NavDrawer {
+class NavDrawerBuilder {
   static final Color _itemColor = Colors.blueAccent;
+  static String discordLink;
 
-  static Drawer getNavDrawer(BuildContext context) {
+  static Drawer buildNavDrawer(BuildContext context) {
     return new Drawer(
         child: Container(color: Colors.white, child: ListView(children: _prepareNavDrawerItems(context))));
   }
@@ -13,8 +15,8 @@ class NavDrawer {
     return [
       _navDrawerHeader(),
       SizedBox(height: 15.0),
-      _buildNavItem(context, Icons.home, "প্রচ্ছদ", AppRouter.homeScreenRoute),
-      _buildNavItem(context, Icons.home, "আমাদের কথা", AppRouter.aboutUsScreenRoute),
+      _buildNavRouteItem(context, Icons.home, "প্রচ্ছদ", AppRouter.homeScreenRoute),
+      _buildNavLinkItem(context, Icons.disc_full, "পরামর্শ দিন (Discord)", discordLink),
       _navDrawerAppInfo()
     ];
   }
@@ -33,17 +35,28 @@ class NavDrawer {
     );
   }
 
-  static ListTile _buildNavItem(BuildContext context, icon, String text, String routeName) {
+  static ListTile _buildNavRouteItem(BuildContext context, icon, String text, String routeName) {
     return ListTile(
-        leading: Icon(icon, color: _itemColor, size: 30),
+        leading: Icon(icon, color: _itemColor, size: 25),
         title: Text(
           text,
-          style: TextStyle(color: _itemColor, fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(color: _itemColor, fontWeight: FontWeight.bold, fontSize: 18),
         ),
         onTap: () {
           () => Navigator.of(context).pop();
           Navigator.of(context).pushNamed(routeName);
         },
+        horizontalTitleGap: 0);
+  }
+
+  static ListTile _buildNavLinkItem(BuildContext context, icon, String text, String link) {
+    return ListTile(
+        leading: Icon(icon, color: _itemColor, size: 25),
+        title: Text(
+          text,
+          style: TextStyle(color: _itemColor, fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        onTap: () => launch(link),
         horizontalTitleGap: 0);
   }
 
@@ -53,13 +66,13 @@ class NavDrawer {
           offset: Offset(-16, 0),
           child: new Text(
             "অ্যাপ ইনফো",
-            style: TextStyle(color: _itemColor, fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(color: _itemColor, fontWeight: FontWeight.bold, fontSize: 18),
           )),
       applicationName: "CodeBangladesh.org",
       applicationVersion: "v1.0.0",
-      applicationIcon: new Icon(Icons.adb),
+      applicationIcon: new Icon(Icons.adb, size: 25),
       dense: true,
-      icon: new Icon(Icons.info, color: _itemColor, size: 30),
+      icon: new Icon(Icons.info, color: _itemColor, size: 25),
     );
   }
 }

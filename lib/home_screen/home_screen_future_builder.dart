@@ -1,6 +1,6 @@
-import 'package:code_bangladesh_mobile_app/app_router.dart';
 import 'package:code_bangladesh_mobile_app/category_screen/category_screen.dart';
 import 'package:code_bangladesh_mobile_app/dto/app_data.dart';
+import 'package:code_bangladesh_mobile_app/dto/category_response_dto.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenFutureBuilder {
@@ -43,7 +43,8 @@ class HomeScreenFutureBuilder {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CategoryScreen(categoryId: categoryResponseDTO.id, category: categoryResponseDTO),
+                  builder: (context) =>
+                      CategoryScreen(categoryId: categoryResponseDTO.id, category: categoryResponseDTO),
                 ),
               );
             },
@@ -56,9 +57,7 @@ class HomeScreenFutureBuilder {
                 SizedBox(height: 15.0),
                 gridCellText(categoryResponseDTO.name)
               ],
-            )
-        )
-    );
+            )));
   }
 
   static Image gridCellImage(String imagePath) {

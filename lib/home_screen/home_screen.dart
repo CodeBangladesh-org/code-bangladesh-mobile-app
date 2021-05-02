@@ -27,8 +27,8 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBarBuilder.buildAppBar(),
-      drawer: NavDrawer.getNavDrawer(context),
+      appBar: AppBarBuilder.buildAppBar(context),
+      drawer: NavDrawerBuilder.buildNavDrawer(context),
       body: Container(
         decoration: BoxDecoration(color: Colors.blue.shade100),
         child: Padding(

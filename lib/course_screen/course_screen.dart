@@ -1,6 +1,7 @@
 import 'package:code_bangladesh_mobile_app/common_ui/appbar_builder.dart';
-import 'package:code_bangladesh_mobile_app/dto/app_data.dart';
 import 'package:code_bangladesh_mobile_app/common_ui/nav_drawer.dart';
+import 'package:code_bangladesh_mobile_app/dto/course_content_response_dto.dart';
+import 'package:code_bangladesh_mobile_app/dto/course_response_dto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,8 +29,8 @@ class CourseScreenState extends State<CourseScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBarBuilder.buildAppBar(),
-      drawer: NavDrawer.getNavDrawer(context),
+      appBar: AppBarBuilder.buildAppBar(context),
+      drawer: NavDrawerBuilder.buildNavDrawer(context),
       body: Container(
           decoration: BoxDecoration(color: Colors.white),
           padding: const EdgeInsets.only(top: 15.0, bottom: 0.0),

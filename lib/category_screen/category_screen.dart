@@ -1,7 +1,9 @@
 import 'package:code_bangladesh_mobile_app/common_ui/appbar_builder.dart';
-import 'package:code_bangladesh_mobile_app/course_screen/course_screen.dart';
-import 'package:code_bangladesh_mobile_app/dto/app_data.dart';
 import 'package:code_bangladesh_mobile_app/common_ui/nav_drawer.dart';
+import 'package:code_bangladesh_mobile_app/course_screen/course_screen.dart';
+import 'package:code_bangladesh_mobile_app/dto/category_response_dto.dart';
+import 'package:code_bangladesh_mobile_app/dto/category_stat_response_dto.dart';
+import 'package:code_bangladesh_mobile_app/dto/course_response_dto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -28,8 +30,8 @@ class CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBarBuilder.buildAppBar(),
-      drawer: NavDrawer.getNavDrawer(context),
+      appBar: AppBarBuilder.buildAppBar(context),
+      drawer: NavDrawerBuilder.buildNavDrawer(context),
       body: Container(
           decoration: BoxDecoration(color: Colors.white),
           padding: const EdgeInsets.only(top: 15.0, bottom: 0.0),
@@ -181,7 +183,7 @@ class CategoryScreenState extends State<CategoryScreen> {
                 height: 20,
               ),
               SizedBox(width: 5.0),
-              Text(course.instructorsCommaSeparated),
+              Flexible(child: Text(course.instructorsCommaSeparated)),
             ]),
             Padding(padding: EdgeInsets.only(top: 5.0)),
             Row(children: <Widget>[
