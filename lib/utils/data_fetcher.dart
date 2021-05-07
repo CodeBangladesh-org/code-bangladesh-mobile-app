@@ -12,7 +12,6 @@ class DataFetcher {
   static Future<AppDataResponseDTO> fetch() {
     return _memoizer.runOnce(() async {
       final response = await _httpClient.get(Uri.parse(_categoryJson));
-      print("fetched data !!!!");
       if (response.statusCode == 200) {
         return AppDataResponseDTO.fromJson(json.decode(response.body));
       } else {

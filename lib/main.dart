@@ -1,4 +1,3 @@
-import 'package:code_bangladesh_mobile_app/app_router.dart';
 import 'package:code_bangladesh_mobile_app/home_screen/home_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';

@@ -115,7 +115,6 @@ class CategoryScreen extends StatelessWidget {
     return new InkWell(
       splashColor: Colors.blue.shade200,
       onTap: () {
-        print("tapped");
         Navigator.push(
           context,
           MaterialPageRoute(

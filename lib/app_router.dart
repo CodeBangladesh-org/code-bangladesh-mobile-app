@@ -1,4 +1,3 @@
-import 'package:code_bangladesh_mobile_app/category_screen/category_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'home_screen/home_screen.dart';
