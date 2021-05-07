@@ -4,31 +4,20 @@ import 'package:code_bangladesh_mobile_app/course_screen/course_screen.dart';
 import 'package:code_bangladesh_mobile_app/dto/category_response_dto.dart';
 import 'package:code_bangladesh_mobile_app/dto/category_stat_response_dto.dart';
 import 'package:code_bangladesh_mobile_app/dto/course_response_dto.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class CategoryScreen extends StatefulWidget {
+class CategoryScreen extends StatelessWidget {
   final String categoryId;
   final CategoryResponseDTO category;
 
   CategoryScreen({Key key, @required this.categoryId, @required this.category}) : super(key: key);
 
   @override
-  CategoryScreenState createState() => new CategoryScreenState(category: category);
-}
-
-class CategoryScreenState extends State<CategoryScreen> {
-  final CategoryResponseDTO category;
-
-  CategoryScreenState({this.category});
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _sendAnalyticsEvent(context, category.id);
     return new Scaffold(
       appBar: AppBarBuilder.buildAppBar(context),
       drawer: NavDrawerBuilder.buildNavDrawer(context),
@@ -198,6 +187,15 @@ class CategoryScreenState extends State<CategoryScreen> {
             ]),
             SizedBox(height: 25.0),
           ])),
+    );
+  }
+
+  Future<void> _sendAnalyticsEvent(BuildContext context, String categoryId) async {
+    FirebaseAnalytics analytics = Provider.of<FirebaseAnalytics>(context, listen: false);
+    analytics.setCurrentScreen(screenName: 'CategoryScreen');
+    await analytics.logEvent(
+      name: 'CategoryScreen',
+      parameters: <String, dynamic>{'categoryId': categoryId},
     );
   }
 }

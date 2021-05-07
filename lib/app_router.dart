@@ -12,11 +12,11 @@ class AppRouter {
       case homeScreenRoute:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       default:
-        return MaterialPageRoute(builder: (_) => DefaultScreen(settings));
+        return MaterialPageRoute(builder: (_) => defaultScreen(settings));
     }
   }
 
-  static Scaffold DefaultScreen(RouteSettings settings) {
+  static Scaffold defaultScreen(RouteSettings settings) {
     return Scaffold(
       body: Center(
         child: Text('No route defined for ${settings.name}'),

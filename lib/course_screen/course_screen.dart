@@ -2,32 +2,21 @@ import 'package:code_bangladesh_mobile_app/common_ui/appbar_builder.dart';
 import 'package:code_bangladesh_mobile_app/common_ui/nav_drawer.dart';
 import 'package:code_bangladesh_mobile_app/dto/course_content_response_dto.dart';
 import 'package:code_bangladesh_mobile_app/dto/course_response_dto.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CourseScreen extends StatefulWidget {
+class CourseScreen extends StatelessWidget {
   final String courseId;
   final CourseResponseDTO course;
 
   CourseScreen({Key key, @required this.courseId, @required this.course}) : super(key: key);
 
   @override
-  CourseScreenState createState() => new CourseScreenState(course: course);
-}
-
-class CourseScreenState extends State<CourseScreen> {
-  final CourseResponseDTO course;
-
-  CourseScreenState({this.course});
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _sendAnalyticsEvent(context, course.id);
     return new Scaffold(
       appBar: AppBarBuilder.buildAppBar(context),
       drawer: NavDrawerBuilder.buildNavDrawer(context),
@@ -80,7 +69,10 @@ class CourseScreenState extends State<CourseScreen> {
         color: Colors.white,
         child: new InkWell(
             splashColor: Colors.blue.shade200,
-            onTap: () => launch(content.videoLink),
+            onTap: () {
+              _sendCourseViewedAnalyticsEvent(context, courseId, content.videoLink);
+              return launch(content.videoLink);
+            },
             child: Card(
                 color: Colors.blue.shade50,
                 child: ListTile(
@@ -92,5 +84,22 @@ class CourseScreenState extends State<CourseScreen> {
                       content.description,
                       style: TextStyle(),
                     )))));
+  }
+
+  Future<void> _sendAnalyticsEvent(BuildContext context, String courseId) async {
+    FirebaseAnalytics analytics = Provider.of<FirebaseAnalytics>(context, listen: false);
+    analytics.setCurrentScreen(screenName: 'CourseScreen');
+    await analytics.logEvent(
+      name: 'CourseScreen',
+      parameters: <String, dynamic>{'courseId': courseId},
+    );
+  }
+
+  Future<void> _sendCourseViewedAnalyticsEvent(BuildContext context, String courseId, String videoLink) async {
+    FirebaseAnalytics analytics = Provider.of<FirebaseAnalytics>(context, listen: false);
+    await analytics.logEvent(
+      name: 'CourseViewed',
+      parameters: <String, dynamic>{'courseId': courseId, 'videoLink': videoLink},
+    );
   }
 }

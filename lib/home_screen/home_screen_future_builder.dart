@@ -39,7 +39,6 @@ class HomeScreenFutureBuilder {
         child: new InkWell(
             splashColor: Colors.blue.shade200,
             onTap: () {
-              print("tapped");
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -47,6 +46,7 @@ class HomeScreenFutureBuilder {
                       CategoryScreen(categoryId: categoryResponseDTO.id, category: categoryResponseDTO),
                 ),
               );
+
             },
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.center,
