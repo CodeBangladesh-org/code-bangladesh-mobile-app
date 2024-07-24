@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_tortoise"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_tech_company"
+            android:icon="@drawable/ic_menu_tech_company"
+            android:title="@string/menu_tech_companies" />
+        <item
+            android:id="@+id/nav_provide_suggestion"
+            android:icon="@drawable/ic_menu_discord"
+            android:title="@string/menu_provide_suggestion" />
+        <item
+            android:id="@+id/nav_github"
+            android:icon="@drawable/ic_menu_github"
+            android:title="@string/menu_github" />
+        <item
+            android:id="@+id/nav_app_store"
+            android:icon="@drawable/ic_menu_playstore"
+            android:title="@string/menu_app_store" />
+        <item
+            android:id="@+id/nav_web_version"
+            android:icon="@drawable/ic_menu_web"
+            android:title="@string/menu_web_version" />
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_menu_about_us"
+            android:title="@string/menu_about_us" />
+    </group>
+</menu>
