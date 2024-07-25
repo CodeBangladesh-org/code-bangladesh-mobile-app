@@ -3,16 +3,20 @@ package org.codebangladesh
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import org.codebangladesh.databinding.ActivityMainBinding
+import org.codebangladesh.network.AppDataService
+import org.codebangladesh.ui.SharedViewModel
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navigationItemHandler: NavigationItemHandler
     private lateinit var menuItemHandler: MenuItemHandler
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +26,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         navigationItemHandler = NavigationItemHandler(this, binding)
         menuItemHandler = MenuItemHandler(this)
+
+        // Initialize AppDataService to fetch data
+        AppDataService(sharedViewModel).init()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
