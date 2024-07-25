@@ -19,8 +19,6 @@ import java.util.concurrent.TimeUnit
 
 class AppDataService(private val sharedViewModel: SharedViewModel) {
 
-    private val BASE_URL = "https://codebangladesh.org/"
-
     private val gson: Gson = GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create()
@@ -32,7 +30,7 @@ class AppDataService(private val sharedViewModel: SharedViewModel) {
 
     private val api: FetchDataService by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Companion.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -52,6 +50,7 @@ class AppDataService(private val sharedViewModel: SharedViewModel) {
                     }
                 } else {
                     Log.e("SharedViewModel", "Error response: ${response.errorBody()?.string()}")
+                    sharedViewModel.setErrorMessage(SERVER_ERROR_MESSAGE)
                 }
                 sharedViewModel.setLoading(false)
             }
@@ -59,6 +58,7 @@ class AppDataService(private val sharedViewModel: SharedViewModel) {
             override fun onFailure(call: Call<AppDataResponseDto>, t: Throwable) {
                 Log.e("SharedViewModel", "API call failed. Exception: ${t.message}", t)
                 sharedViewModel.setLoading(false)
+                sharedViewModel.setErrorMessage(INTERNET_ERROR_MESSAGE)
             }
         })
     }
@@ -77,5 +77,13 @@ class AppDataService(private val sharedViewModel: SharedViewModel) {
 
         @GET("/assets/generated/app-data.json")
         fun fetchAppData(): Call<AppDataResponseDto>
+    }
+
+    companion object {
+        private const val BASE_URL = "https://codebangladesh.org/"
+        private const val SERVER_ERROR_MESSAGE =
+            "দুঃখিত, সার্ভারে সাময়িক সমস্যার জন্য অ্যাপটি কাজ করছে না।"
+        private const val INTERNET_ERROR_MESSAGE =
+            "দুঃখিত, ইন্টারনেট সমস্যার জন্য অ্যাপটি কাজ করছে না।"
     }
 }

@@ -3,8 +3,11 @@ package org.codebangladesh.ui.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +20,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var progressBar: ProgressBar
+    private lateinit var errorMessageTextView: TextView
     private lateinit var categoriesGrid: RecyclerView
     private lateinit var sharedViewModel: SharedViewModel
 
@@ -34,9 +38,15 @@ class HomeFragment : Fragment() {
 
         progressBar = binding.progressBar
         categoriesGrid = binding.categoriesGrid
+        errorMessageTextView = binding.errorMessage
 
         sharedViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            progressBar.visibility = if (isLoading) VISIBLE else GONE
+        }
+
+        sharedViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessageTextView.visibility = VISIBLE
+            errorMessageTextView.text = errorMessage
         }
 
         sharedViewModel.appDataLiveData.observe(viewLifecycleOwner) { appData ->
