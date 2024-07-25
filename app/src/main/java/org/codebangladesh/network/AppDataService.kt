@@ -1,12 +1,12 @@
 package org.codebangladesh.network
 
 import android.util.Log
-import com.google.android.apps.common.testing.accessibility.framework.BuildConfig
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.codebangladesh.BuildConfig
 import org.codebangladesh.ui.SharedViewModel
 import org.codebangladesh.ui.dto.AppDataResponseDto
 import retrofit2.Call
@@ -30,7 +30,7 @@ class AppDataService(private val sharedViewModel: SharedViewModel) {
 
     private val api: FetchDataService by lazy {
         Retrofit.Builder()
-            .baseUrl(Companion.BASE_URL)
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

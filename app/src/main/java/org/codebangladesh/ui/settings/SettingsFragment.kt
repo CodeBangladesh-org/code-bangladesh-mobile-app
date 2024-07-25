@@ -1,4 +1,4 @@
-package org.codebangladesh.ui.settings;
+package org.codebangladesh.ui.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import org.codebangladesh.BuildConfig
 import org.codebangladesh.databinding.FragmentSettingsBinding
 import org.codebangladesh.ui.SharedViewModel
 
@@ -26,6 +27,9 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        binding.appVersionTextView.text = BuildConfig.VERSION_NAME
+
         return binding.root
     }
 
