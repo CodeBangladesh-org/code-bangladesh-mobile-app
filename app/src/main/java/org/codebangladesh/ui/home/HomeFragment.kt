@@ -44,8 +44,6 @@ class HomeFragment : Fragment() {
             categoriesGrid.adapter = categoriesAdapter
         }
 
-        sharedViewModel.fetchAppData()
-
         return binding.root
     }
 

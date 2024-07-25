@@ -27,7 +27,11 @@ class SharedViewModel : ViewModel() {
     fun getCourse(categoryName: String, courseName: String): CourseResponseDto? =
         _appData.value?.categories?.find { it.name == categoryName }?.courses?.find { it.name == courseName }
 
-    fun fetchAppData() {
+    init {
+        fetchAppData()
+    }
+
+    private fun fetchAppData() {
         _isLoading.value = true
 
         RetrofitInstance.api.fetchAppData().enqueue(object : Callback<AppDataResponseDto> {
