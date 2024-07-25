@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import org.codebangladesh.databinding.FragmentHomeBinding
+import org.codebangladesh.network.AppDataService
 import org.codebangladesh.ui.SharedViewModel
 
 class HomeFragment : Fragment() {
@@ -23,6 +24,8 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+
+        AppDataService(sharedViewModel).init()
     }
 
     override fun onCreateView(
