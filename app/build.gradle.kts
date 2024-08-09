@@ -14,6 +14,9 @@ val keystoreProperties = Properties().apply {
     }
 }
 
+val version = "2.0.0"
+val (versionMajor, versionMinor, versionPatch) = version.split(".").map { it.toInt() }
+
 android {
     namespace = "org.codebangladesh"
     compileSdk = 34
@@ -22,8 +25,8 @@ android {
         applicationId = "org.codebangladesh"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "2.0.0"
+        versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
+        versionName = "$versionMajor.$versionMinor.$versionPatch"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
